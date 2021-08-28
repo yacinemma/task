@@ -63,5 +63,12 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        /**
+         * This middleware for lang.
+         *
+         * this middleware may be assigned to groups or used individually.
+         *
+         */
+        'lang'          => \App\Http\Middleware\SetLang::class,
     ];
 }

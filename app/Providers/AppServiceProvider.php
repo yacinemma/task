@@ -23,6 +23,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        app()->singleton('lang',function(){
+            
+            if(session()->has('lang')){
+                return session()->get('lang');
+            }else{
+                return 'en';
+            }
+            
+        });
     }
 }
