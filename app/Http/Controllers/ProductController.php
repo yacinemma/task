@@ -3,18 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class ProductController extends Controller 
 {
 
   /**
-   * Display a listing of the resource.
+   * Display list of categorie.
    *
    * @return Response
    */
   public function index()
   {
-    
+    $categories = Category::whereNull('parent_id')->get();
+    return view('welcome',compact("categories"));
+    dump(Category::with('sub_categories','products')->get()[1]);
+    dd(Product::with('category')->get()[1]);
+  }
+
+  public function getSubCategories(Request $request){
+    if(isset($request->texto)){
+        $subcategorias = Subcategoria::whereCategoria_id($request->texto)->get();
+        return response()->json(
+            [
+                'lista' => $subcategorias,
+                'success' => true
+            ]
+            );
+    }else{
+        return response()->json(
+            [
+                'success' => false
+            ]
+            );
+
+    }
+
   }
 
   /**
