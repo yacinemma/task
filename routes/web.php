@@ -16,6 +16,7 @@
  */
 Route::middleware('lang')->group(function () {
     Route::get('/', 'ProductController@index');
+    Route::get('/loadSubCategorie', 'ProductController@loadSubCategorie');
 });
 
 Route::get('lang/{lang}',function($lang){

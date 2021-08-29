@@ -16,96 +16,32 @@ class ProductController extends Controller
    */
   public function index()
   {
+    $lang = app()->getLocale();
     $categories = Category::whereNull('parent_id')->get();
-    return view('welcome',compact("categories"));
+    return view('welcome',compact("categories","lang"));
     dump(Category::with('sub_categories','products')->get()[1]);
-    dd(Product::with('category')->get()[1]);
+    dd(Product::with('category','lang')->get()[1]);
   }
 
-  public function getSubCategories(Request $request){
-    if(isset($request->texto)){
-        $subcategorias = Subcategoria::whereCategoria_id($request->texto)->get();
+  public function loadSubCategorie(Request $request){
+    if(isset($request->categorie_id)){
+        $sub_categories = Category::with('sub_categories','products')->whereId($request->categorie_id)->first();
         return response()->json(
             [
-                'lista' => $subcategorias,
+                'result' => $sub_categories,
                 'success' => true
             ]
             );
     }else{
         return response()->json(
             [
-                'success' => false
+                'result' => false
             ]
             );
 
     }
 
   }
-
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return Response
-   */
-  public function create()
-  {
-    
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @return Response
-   */
-  public function store(Request $request)
-  {
-    
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function show($id)
-  {
-    
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function edit($id)
-  {
-    
-  }
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function update($id)
-  {
-    
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function destroy($id)
-  {
-    
-  }
-  
 }
 
 ?>
